@@ -1,6 +1,6 @@
 <html>
 
-<div style="color:red">
+<div>
 
 <p><b><i>Hello World! </b></i> </p>
 

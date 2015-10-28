@@ -1,0 +1,151 @@
+// Created By: Peggy Ball
+// September 14th, 2015
+// CS 257: Assignment -04
+
+//imports library required for scanner
+import java.util.Scanner;
+
+//Quad constructor class that implements cloneable
+public class Quad  implements Cloneable{
+//creates integer array for coefficient values
+ double[] form= new double[3];
+//instance variable to solve equation based on user input
+ int x;	
+//stores the equation for evaluation
+ double eq;
+  /**
+     * Fills form[] array with coefficient values from main
+     * @param a- a double declared in main
+     * @param b- a double declared in main
+     * @param c- a double declared in main
+     * @precondition integers have declared values and array, form[] has been initialized
+     * @postcondition array form[] contains quad object values.
+     */
+
+	//creates quad objects specified in main
+	public Quad(double a, double b, double c) {
+	//fills array with values from main
+	form[0]=c;
+	form[1]=b;
+	form[2]=a;
+	}
+/**
+     * Returns the array, form[]
+     * @precondition integer array has been populated
+     * @postcondition returns the array
+     * @return returns form array
+     */
+	//method to return the array
+	public  double[] getArray() {	
+	return form;
+	}
+	 /**
+     * Prints out quadratic equation using values from main
+     * @precondition the array contains values
+     * @postcondition the equation has been printed using those values
+     */
+	//method that prints out the equation in readable string form
+	public String toString() {
+	System.out.println(this.form[2] + "x^2+"+ this.form[1] +"x+" + this.form[0]);
+        return this.form[2] + "x^2+"+ this.form[1] +"x+" + this.form[0];
+    }
+    /**
+     * Evaluates equation using provided user provided x values and coefficient values from the array
+     * @precondition user has provided a value of x; array has been filled
+     * @postcondition the equation is evaluated.
+     */
+	//method that evaluates the equation based on the x input by the user via the scanner
+	public void eval() {
+	System.out.println("Provide a value of x");
+	Scanner sc = new Scanner(System.in);
+	x = sc.nextInt();
+	eq= form[2]*Math.pow(x,2)+form[1]*x+form[0];
+	//prints out answer to solved equation
+	System.out.println(eq);
+	
+	}
+	 /**
+     * Creates a new Quadratic equation with the sums of the coefficients of the first two equations.
+     * @param q1- Quad object declared in main
+     * @param q2- Quad object declared in main
+     * @precondition Quad objects have been created in main, array has been filled. 
+     * @postcondition New equation created using values from the previous to equations
+     * @return q3 Quad object that is the new equation
+     */
+	//method that adds the coefficients of the two established equations
+	public static Quad sum(Quad q1, Quad q2) {
+	
+	double a=q1.form[2] + q2.form[2];
+	double b=q1.form[1] + q2.form[1];
+	double c=q1.form[0] + q2.form[0];
+	//new equation saved as q3 then printed out in Quad method
+	Quad q3= new Quad (a,b,c);
+		System.out.println("New equation is:" + q3 );
+	return q3 ;
+	
+ 	}
+	 /**
+     * Checks to see if either of the quad objects are the same
+     * @param q- A Quad object declared in main
+     * @precondition Quad object is declared in main and array is populated 
+     * @postcondition returns true if equations are same and flase if different
+     * @return ture or false
+     */
+	//boolean that checks if the equationsa are equal to one another and returns true if they are/ false otherwise
+	public boolean equals(Quad q){
+	if(this.form[0]==q.form[0] && this.form[1] == q.form[1] && this.form[0]==q.form[1] && this.form[2] == q.form[2]) {
+	return true;
+	}
+		
+	
+	else { 
+	return false;}
+
+}
+	 /**
+     * Clones quad object declared in main
+     * @precondition quad object exists
+     * @postcondition copied equation produced
+     * @return returns new equation
+     */
+	//method to clone preexisting equation specified when the method is called in the main
+	public Quad clone() {
+		Quad q4;
+		
+		try {
+			q4 = (Quad) super.clone();
+		}
+		//catch statement in case "implements cloneable" was forgotten
+		catch (CloneNotSupportedException e)
+		{
+			throw new RuntimeException
+			("This class does not implement Cloneable");
+		}
+		//prints out clone
+		System.out.println("Cloned equation is:");
+		toString();
+		return q4;
+	
+	}
+	
+	 /**
+     * Multiplies coefficients of specified quad object by specified double and prints the results
+     * @param r- double declared in main (value -3.0)
+     * @param q- Quad object to be scaled; specified in main
+     * @precondition quad object exists; array exists; value of double was provided
+     * @postcondition scaled quation produced
+     * @return returns new equation
+     */
+	public Quad scale (double r, Quad q) {
+	double c=form[0]= form[0]*r;
+	double b=form[1]= form[1]*r;
+	double a=form[2]= form[2]*r;
+		Quad q5= new Quad (a,b,c);
+	toString();
+	
+	return q;
+	
+	}
+}
+
+

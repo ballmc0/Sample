@@ -1,0 +1,202 @@
+<?php
+/* Created: April 5, 2015
+*  Last Modified: April 27,2015
+*  Primary Authors: Peggy Ball, Sallie Carter, Tariro Kandemiri
+*  index.php
+*  References: craft.css, mobile.css 
+*/
+
+
+
+/*connects to msql database or indicates that the connection failed*/
+require_once 'craftLogin.php';
+  $conn = new mysqli($hn, $un, $pw, $db);
+  if ($conn->connect_error) die ("Didn't work");
+
+/*echo block prints HTML5 code */
+echo <<<_END
+<html>
+<!-- Start of HTML5 code -->
+<meta charset="utf-8">
+<!-- Test for device width -->
+<meta name="viewport" content="user-scalable=no, width=device-width"/>
+
+<!--Indicates CSS files to be referenced based on screeen width -->
+
+<link rel="stylesheet" type="text/css" media="screen and (max-width:480px)" href="mobile.css" />
+<link rel="stylesheet" type="text/css" media="screen and (min-width:481px)" href="Craft.css" />
+
+<head>
+
+<!-- Title displayed on window tab -->
+
+<title> Sewanee Craft Club </title>
+
+</head>
+<body>
+
+<!-- Header div creates the large dark purple rectangle/header on the top of the page -->
+
+<div class="header"> 
+
+<!-- Info1 div portions off a small rectangle on the righthand side of the header-->
+<!-- which contains generic contact info -->
+
+<div class="info1">Official Craft House<hr> <br> Georgia Townhouse 3 <br> Georgia Avenue <br> Sewanee, Tennessee 37383<br>
+<br>e-mail:<br>cartese0@sewanee.edu</div>
+
+<!-- Styles white lettering within the header that displays webpage title -->
+
+<h1 style="text-align:left" >Sewanee Craft Club</h1>
+
+<!-- Begins navigation bar -->
+
+<nav>
+
+<!-- allows the whole flipping piece to be styled -->
+
+<div class="flip-container";">
+       
+        <!-- allows animation to be styled -->
+	<div class="flipper">
+                
+                <!-- defines front of flipping image -->
+		<div class="front">
+                        <!-- image to be displayed -->
+			<img src="craft2.jpg" alt="multicolored skeins of ">
+		</div>
+                
+                <!-- defines back of flipping image -->
+		<div class="back">
+			
+			<!-- used to style text on the back of the flipping image -->
+			<div class="backText">
+                        <!-- links to homepage -->
+			<a href="index.php"><b>Home</b></a>
+                        </div>
+		</div>
+	</div>
+</div>
+
+<div class="flip-container";">
+	<div class="flipper">
+		<div class="front">
+			<img src="craft5.jpg" alt="beaded necklaces">
+		</div>
+		<div class="back">
+			<div class="backText">
+			<a href="events.php"><b>Events</b></a>
+                        </div>
+		</div>
+	</div>
+</div>
+
+<div class="flip-container";">
+	<div class="flipper">
+		<div class="front">
+			<img src="craft1.jpg" alt="a beaded bracelet">
+		</div>
+		<div class="back">
+			<div class="backText">
+			<a href="submit.php"><b>Submit an idea</b></a>
+                        </div>
+		</div>
+	</div>
+</div>
+
+<div class="flip-container";">
+	<div class="flipper">
+		<div class="front">
+			<img src="craft4.jpg" alt="earrings made by members are displayed">
+		</div>
+		<div class="back">
+			<div class="backText">
+			<a href="gallery.php" class="members"><b>Gallery</b></a>
+                        </div>
+		</div>
+	</div>
+</div>
+
+<div class="flip-container";">
+	<div class="flipper">
+		<div class="front">
+			<img src="craft.jpg" alt="A student carves a rubber stamp">
+		</div>
+		<div class="back">
+			<div class="backText">
+			<a href="officerLogin.php" class="members"><b>Login</b></a>
+                        </div>
+		</div>
+	</div>
+</div></nav>
+
+<!-- ends navigation bar -->
+
+
+
+</div><br>
+
+<!-- end of header div -->
+
+
+<!-- creates light purple body section of the page -->
+<div class="about">
+
+<h2>About the Craft House</h2>
+
+_END;
+?>
+
+<?php /*content sourced for about div */
+include 'aboutinfo.php';?>
+
+<?php
+/*creates sidebar div*/
+echo "<br><br></div><div class=info2>";
+
+/*prepares query, defines officer as user-defined text from input type
+*then evaluates query*/
+$stmt = $conn->prepare('SELECT fname,lname,email FROM members WHERE members.officer=?');
+   $stmt->bind_param('s', $idea);
+$officer= $_POST['office'];
+$idea = "SELECT fname,lname,email FROM members WHERE members.officer="."'$officer'";
+$result = $conn->query($idea);
+
+
+if ($result->num_rows > 0) {
+   
+    /*provides data for each row and echoes it*/
+    while($row = $result->fetch_assoc()) {
+        echo "Contact Info:  <br>".$row["fname"]." ".$row["lname"]." | ".$row["email"]."<hr>"."";
+    }
+   }
+/*provides default header for sidebar when not searching*/
+else{echo "<b>Contact an officer</b><hr>";
+	
+} 
+
+echo <<<_END
+<!-- lists officer positions in sidebar-->
+<br>Officer List:
+<ul>
+  <li> President</li>
+  <li> Vice President</li>
+  <li> Secretary</li>
+  <li> Charity Coordinator</li>
+  <li> Budget Manager</li>
+</ul>
+    <!--creates text field and button to search-->
+    <form action="index.php" method="post"> <pre>
+    Officer Title <br><input type="text" name="office" size="15">
+    <input type="submit" value="Look" alt="Look for contact info">
+  </pre></form></div>
+_END;
+
+
+/*echo to close html tags*/
+echo <<<_END
+
+</body>
+</html>
+_END;
+?>

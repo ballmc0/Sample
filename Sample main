@@ -1,0 +1,49 @@
+// Created By: Peggy Ball
+// September 14th, 2015
+// CS 257: Assignment -04
+
+//class containing the main method to execute actions stored in Quad.java
+public class Quadmain {
+//main method
+
+ /**
+     * Main method that utilizes methods and constructors from Quad.java and 
+     * Establishes Quad objects to be utilized in Quad.java
+     */
+public static void main(String[]args){
+	//assignment statements that create and initialize Quad objects and provides values for said objects
+	Quad q1= new Quad(1.0,2.0,-3.0);
+	q1.toString();
+	Quad q2= new Quad(4.0,5.0,6.0);
+	q2.toString();
+	Quad q3= new Quad(4.0,0.0,3.0);
+	q3.toString();
+	//calls method to return the array for both equations
+	q1.getArray();
+	q2.getArray();
+	//evaluates both arrays based on user input
+	System.out.println("");
+	q1.toString(); //When x = 0 the equation should evaluate to -3.0
+	q1.eval();
+	System.out.println("");
+	q2.toString(); //When x=0 the equation should evaluate to 6
+	q2.eval();
+	System.out.println("");
+	q3.toString(); //When x=0 the equation should evaluate to 3
+	q3.eval();
+	System.out.println("");
+	//checks to see if the equations have the same coefficients
+	q1.equals(q1);
+	q2.equals(q2);
+	System.out.println("");
+	//creates third equation based on the sum of the coefficients from the first two arrays
+	q1.sum(q1,q2);
+	//clones the second equation
+	System.out.println("");
+	q2.clone();
+	System.out.println("");
+	q1.scale(-3.0,q1);// q1 scaled by -3.0 is -3.0x^2+-6.0x+9.0
+
+}
+}
+
